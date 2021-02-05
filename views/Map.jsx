@@ -1,4 +1,5 @@
 import React from "react";
+import { Head } from "./Head.jsx";
 
 export default function Map({ cases }) {
   const population = {
@@ -143,50 +144,70 @@ export default function Map({ cases }) {
   const points = (region) => region.map(xy).toString();
 
   return (
-    <div className="map">
-      <span>{dates[day]}</span>
-      <svg viewBox="10 0 15 15">
-        <polygon points={points(Skåne)} fill={color(values.Skåne)} />
-        <polygon points={points(Blekinge)} fill={color(values.Blekinge)} />
-        <polygon points={points(Uppsala)} fill={color(values.Uppsala)} />
-        <polygon points={points(Norrbotten)} fill={color(values.Norrbotten)} />
-        <polygon
-          points={points(Västerbotten)}
-          fill={color(values.Västerbotten)}
-        />
-        <polygon
-          points={points(Västernorrland)}
-          fill={color(values.Västernorrland)}
-        />
-        <polygon points={points(Gotland)} fill={color(values.Gotland)} />
-        <polygon points={points(Stockholm)} fill={color(values.Stockholm)} />
-        <polygon
-          points={points(Jämtland_Härjedalen)}
-          fill={color(values.Jämtland_Härjedalen)}
-        />
-        <polygon points={points(Gävleborg)} fill={color(values.Gävleborg)} />
-        <polygon points={points(Sörmland)} fill={color(values.Sörmland)} />
-        <polygon
-          points={points(Västmanland)}
-          fill={color(values.Västmanland)}
-        />
-        <polygon points={points(Dalarna)} fill={color(values.Dalarna)} />
-        <polygon points={points(Värmland)} fill={color(values.Värmland)} />
-        <polygon points={points(Örebro)} fill={color(values.Örebro)} />
-        <polygon
-          points={points(Västra_Götaland)}
-          fill={color(values.Västra_Götaland)}
-        />
-        <polygon
-          points={points(Östergötland)}
-          fill={color(values.Östergötland)}
-        />
-        <polygon points={points(Kalmar)} fill={color(values.Kalmar)} />
-        <polygon points={points(Kronoberg)} fill={color(values.Kronoberg)} />
-        <polygon points={points(Halland)} fill={color(values.Halland)} />
-        <polygon points={points(Jönköping)} fill={color(values.Jönköping)} />
-      </svg>
-    </div>
+    <html>
+      <Head title="map" />
+      <body>
+        <div className="map">
+          <span>{dates[day]}</span>
+          <svg viewBox="10 0 15 15">
+            <polygon points={points(Skåne)} fill={color(values.Skåne)} />
+            <polygon points={points(Blekinge)} fill={color(values.Blekinge)} />
+            <polygon points={points(Uppsala)} fill={color(values.Uppsala)} />
+            <polygon
+              points={points(Norrbotten)}
+              fill={color(values.Norrbotten)}
+            />
+            <polygon
+              points={points(Västerbotten)}
+              fill={color(values.Västerbotten)}
+            />
+            <polygon
+              points={points(Västernorrland)}
+              fill={color(values.Västernorrland)}
+            />
+            <polygon points={points(Gotland)} fill={color(values.Gotland)} />
+            <polygon
+              points={points(Stockholm)}
+              fill={color(values.Stockholm)}
+            />
+            <polygon
+              points={points(Jämtland_Härjedalen)}
+              fill={color(values.Jämtland_Härjedalen)}
+            />
+            <polygon
+              points={points(Gävleborg)}
+              fill={color(values.Gävleborg)}
+            />
+            <polygon points={points(Sörmland)} fill={color(values.Sörmland)} />
+            <polygon
+              points={points(Västmanland)}
+              fill={color(values.Västmanland)}
+            />
+            <polygon points={points(Dalarna)} fill={color(values.Dalarna)} />
+            <polygon points={points(Värmland)} fill={color(values.Värmland)} />
+            <polygon points={points(Örebro)} fill={color(values.Örebro)} />
+            <polygon
+              points={points(Västra_Götaland)}
+              fill={color(values.Västra_Götaland)}
+            />
+            <polygon
+              points={points(Östergötland)}
+              fill={color(values.Östergötland)}
+            />
+            <polygon points={points(Kalmar)} fill={color(values.Kalmar)} />
+            <polygon
+              points={points(Kronoberg)}
+              fill={color(values.Kronoberg)}
+            />
+            <polygon points={points(Halland)} fill={color(values.Halland)} />
+            <polygon
+              points={points(Jönköping)}
+              fill={color(values.Jönköping)}
+            />
+          </svg>
+        </div>
+      </body>
+    </html>
   );
 }
 

@@ -102,6 +102,16 @@ app.use("/map", async (req, res, next) => {
   }
 });
 
+app.use("/chart", async (req, res, next) => {
+  if (cache.book && !isPast(cache.expires)) {
+    console.log("FHM data cached until UTC:", cache.expires);
+    res.render("Chart", { cases: cases(cache.book) });
+  } else {
+    const book = await getBook();
+    res.render("Chart", { cases: cases(book) });
+  }
+});
+
 app.use("/", (req, res, next) => {
   res.render("index");
 });
