@@ -72,6 +72,16 @@ app.use("/14", async (req, res, next) => {
   }
 });
 
+app.use("/change", async (req, res, next) => {
+  if (cache.book && !isPast(cache.expires)) {
+    console.log("FHM data cached until UTC:", cache.expires);
+    res.render("WeeklyChange", { cases: cases(cache.book) });
+  } else {
+    const book = await getBook();
+    res.render("WeeklyChange", { cases: cases(book) });
+  }
+});
+
 app.use("/deaths", async (req, res, next) => {
   if (cache.book && !isPast(cache.expires)) {
     console.log("FHM data cached until UTC:", cache.expires);
