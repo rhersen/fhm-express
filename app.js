@@ -4,7 +4,7 @@ import createError from "http-errors";
 import express from "express";
 import path from "path";
 import xlsx from "xlsx";
-import { addHours, parse } from "date-fns";
+import { addHours, addMinutes, isPast, parse } from "date-fns";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
@@ -32,14 +32,44 @@ app.use(
   )
 );
 
+const cache = {};
+
+async function getBook() {
+  const { data, status, statusText } = await axios.get(
+    "https://www.arcgis.com/sharing/rest/content/items/b5e7488e117749c19881cce45db13f7e/data",
+    {
+      responseType: "arraybuffer",
+    }
+  );
+  console.log(status, statusText, data.length, "bytes");
+  const book = xlsx.read(data);
+  const [, date] = /\w*\s*(.+)/.exec(
+    book.SheetNames[book.SheetNames.length - 1]
+  );
+  const fileReleased = addHours(parse(date, "d MMM yyyy", new Date()), 14);
+  cache.book = book;
+  cache.expires = addMinutes(fileReleased, 1410);
+  return book;
+}
+
 app.use("/7", async (req, res, next) => {
-  const book = await getBook();
-  res.render("SevenDayPerMillion", { cases: cases(book) });
+  if (cache.book && !isPast(cache.expires)) {
+    console.log("FHM data cached until UTC:", cache.expires);
+    res.render("SevenDayPerMillion", { cases: cases(cache.book) });
+  } else {
+    const book = await getBook();
+    res.render("SevenDayPerMillion", { cases: cases(book) });
+  }
 });
 
 app.use("/deaths", async (req, res, next) => {
-  const book = await getBook();
-  res.render("Deaths", { deaths: deaths(book) });
+  if (cache.book && !isPast(cache.expires)) {
+    console.log("FHM data cached until UTC:", cache.expires);
+    res.render("Deaths", { deaths: deaths(cache.book) });
+  } else {
+    const book = await getBook();
+    res.render("Deaths", { deaths: deaths(book) });
+  }
 });
 
 app.use("/", (req, res, next) => {
@@ -63,23 +93,3 @@ app.use((err, req, res, next) => {
 });
 
 export default app;
-
-const cache = {};
-
-async function getBook() {
-  const { data, status, statusText } = await axios.get(
-    "https://www.arcgis.com/sharing/rest/content/items/b5e7488e117749c19881cce45db13f7e/data",
-    {
-      responseType: "arraybuffer",
-    }
-  );
-  console.log(status, statusText, data.length, "bytes");
-  const book = xlsx.read(data);
-  const [, date] = /\w*\s*(.+)/.exec(
-    book.SheetNames[book.SheetNames.length - 1]
-  );
-  const fileReleased = addHours(parse(date, "d MMM yyyy", new Date()), 14);
-  cache.book = book;
-  cache.expires = addHours(fileReleased, 23);
-  return book;
-}

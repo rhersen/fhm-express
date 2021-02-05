@@ -1,4 +1,4 @@
-import {Head} from "./Head.jsx";
+import { Head } from "./Head.jsx";
 import React from "react";
 
 export default function Deaths({ deaths }) {
@@ -11,7 +11,7 @@ export default function Deaths({ deaths }) {
         <ol>
           <li>total: {Object.values(deaths).reduce((a, b) => a + b, 0)}</li>
           {filtered.map(([day, count]) => (
-            <li>
+            <li key={day}>
               {day}: {count}
             </li>
           ))}

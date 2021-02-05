@@ -39,7 +39,7 @@ export const Table = ({ headers, dates, columns, f }) => {
         .slice()
         .reverse()
         .map((date) => (
-          <span className="date">{date}</span>
+          <span key={date} className="date">{date}</span>
         ))}
       {columns.map((column, colIndex) => (
         <>
@@ -49,7 +49,11 @@ export const Table = ({ headers, dates, columns, f }) => {
               const a = column.slice(rowIndex - 13, rowIndex + 1);
               const x = f(a, population[colIndex]);
               if (x === undefined) return <span> </span>;
-              return <span className={color(x)}>{Math.round(x)}</span>;
+              return (
+                <span key={rowIndex} className={color(x)}>
+                  {Math.round(x)}
+                </span>
+              );
             })
             .slice()
             .reverse()}
@@ -59,7 +63,7 @@ export const Table = ({ headers, dates, columns, f }) => {
   );
 
   function color(x) {
-    for (let i = 960; i >= 60; i /= 2) if (x > i) return `color${i}`;
+    for (let i = 960; i >= 60; i /= 2) if (x > i) return `color${  i}`;
     if (x > 20) return "color20";
     if (x > 0) return "color1";
     return "color0";
