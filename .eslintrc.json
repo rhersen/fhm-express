@@ -27,6 +27,7 @@
     "prefer-destructuring": "error",
     "prefer-numeric-literals": "error",
     "prefer-template": "error",
+    "react/jsx-key": "off",
     "react/prop-types": "off"
   },
   "settings": {

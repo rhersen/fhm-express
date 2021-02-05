@@ -10,6 +10,7 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import deaths from "./src/deaths.js";
 import reactViews from "express-react-views";
+import cases from "./src/cases.js";
 
 const app = express();
 
@@ -31,13 +32,18 @@ app.use(
   )
 );
 
+app.use("/7", async (req, res, next) => {
+  const book = await getBook();
+  res.render("SevenDayPerMillion", { cases: cases(book) });
+});
+
 app.use("/deaths", async (req, res, next) => {
   const book = await getBook();
   res.render("Deaths", { deaths: deaths(book) });
 });
 
 app.use("/", (req, res, next) => {
-  res.render("index", { title: "Express" });
+  res.render("index");
 });
 
 // catch 404 and forward to error handler
@@ -69,7 +75,9 @@ async function getBook() {
   );
   console.log(status, statusText, data.length, "bytes");
   const book = xlsx.read(data);
-  const [, date] = /\w*\s*(.+)/.exec(book.SheetNames[book.SheetNames.length - 1]);
+  const [, date] = /\w*\s*(.+)/.exec(
+    book.SheetNames[book.SheetNames.length - 1]
+  );
   const fileReleased = addHours(parse(date, "d MMM yyyy", new Date()), 14);
   cache.book = book;
   cache.expires = addHours(fileReleased, 23);
