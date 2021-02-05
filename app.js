@@ -92,6 +92,16 @@ app.use("/deaths", async (req, res, next) => {
   }
 });
 
+app.use("/map", async (req, res, next) => {
+  if (cache.book && !isPast(cache.expires)) {
+    console.log("FHM data cached until UTC:", cache.expires);
+    res.render("Map", { cases: cases(cache.book) });
+  } else {
+    const book = await getBook();
+    res.render("Map", { cases: cases(book) });
+  }
+});
+
 app.use("/", (req, res, next) => {
   res.render("index");
 });
