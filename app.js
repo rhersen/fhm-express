@@ -48,7 +48,7 @@ async function getBook() {
   );
   const fileReleased = addHours(parse(date, "d MMM yyyy", new Date()), 14);
   cache.book = book;
-  cache.expires = addMinutes(fileReleased, 1410);
+  cache.expires = addMinutes(fileReleased, 1430);
   return book;
 }
 
@@ -59,6 +59,16 @@ app.use("/7", async (req, res, next) => {
   } else {
     const book = await getBook();
     res.render("SevenDayPerMillion", { cases: cases(book) });
+  }
+});
+
+app.use("/14", async (req, res, next) => {
+  if (cache.book && !isPast(cache.expires)) {
+    console.log("FHM data cached until UTC:", cache.expires);
+    res.render("FourteenDayPer1e5", { cases: cases(cache.book) });
+  } else {
+    const book = await getBook();
+    res.render("FourteenDayPer1e5", { cases: cases(book) });
   }
 });
 
