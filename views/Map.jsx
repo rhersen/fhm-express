@@ -211,23 +211,32 @@ export default function Map({ cases }) {
   );
 }
 
-function interpolate(x0, y0, x1, y1, x) {
-  return y0 + ((x - x0) * (y1 - y0)) / (x1 - x0);
-}
-
 function red(x) {
-  if (x < 60) return interpolate(0, 245, 60, 230, x);
-  return interpolate(60, 230, 960, 135, x);
+  if (x > 960) return 135;
+  if (x > 480) return 182;
+  if (x > 240) return 210;
+  if (x > 120) return 218;
+  if (x > 60) return 231;
+  if (x > 20) return 241;
+  return 245;
 }
 
 function green(x) {
-  if (x < 60) return interpolate(0, 214, 60, 148, x);
-  if (x < 120) return interpolate(60, 148, 120, 88, x);
-  if (x < 960) return interpolate(120, 88, 960, 0, x);
-  return 0;
+  if (x > 960) return 2;
+  if (x > 480) return 28;
+  if (x > 240) return 63;
+  if (x > 120) return 101;
+  if (x > 60) return 148;
+  if (x > 20) return 183;
+  return 214;
 }
 
 function blue(x) {
-  if (x > 50) return 0;
-  return interpolate(0, 100, 50, 0, x);
+  if (x > 960) return 2;
+  if (x > 480) return 0;
+  if (x > 240) return 0;
+  if (x > 120) return 0;
+  if (x > 60) return 2;
+  if (x > 20) return 60;
+  return 100;
 }
