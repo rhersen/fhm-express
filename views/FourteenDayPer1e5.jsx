@@ -17,6 +17,12 @@ export default function FourteenDayPer1e5({ cases }) {
             dates.map((date) => cases[header][date])
           )}
           f={(a, pop) => (a.reduce((a, b) => a + b, 0) / pop) * 1e5}
+          color={(x) => {
+            for (let i = 960; i >= 60; i /= 2) if (x > i) return `color${i}`;
+            if (x > 20) return "color20";
+            if (x > 0) return "color1";
+            return "color0";
+          }}
         />
       </body>
     </html>

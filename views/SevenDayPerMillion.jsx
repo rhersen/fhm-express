@@ -19,6 +19,13 @@ export default function SevenDayPerMillion({ cases }) {
           f={(a, pop) =>
             (a.slice(-7).reduce((a, b) => a + b, 0) / 7 / pop) * 1e6
           }
+          color={(y) => {
+            const x = y * 1.4;
+            for (let i = 960; i >= 60; i /= 2) if (x > i) return `color${i}`;
+            if (x > 20) return "color20";
+            if (x > 0) return "color1";
+            return "color0";
+          }}
         />
       </body>
     </html>

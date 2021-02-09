@@ -25,7 +25,7 @@ const population = [
   465214,
 ];
 
-export const Table = ({ headers, dates, columns, f }) => {
+export const Table = ({ headers, dates, columns, f, color }) => {
   return (
     <div
       className="table"
@@ -39,7 +39,9 @@ export const Table = ({ headers, dates, columns, f }) => {
         .slice()
         .reverse()
         .map((date) => (
-          <span key={date} className="date">{date}</span>
+          <span key={date} className="date">
+            {date}
+          </span>
         ))}
       {columns.map((column, colIndex) => (
         <>
@@ -61,11 +63,4 @@ export const Table = ({ headers, dates, columns, f }) => {
       ))}
     </div>
   );
-
-  function color(x) {
-    for (let i = 960; i >= 60; i /= 2) if (x > i) return `color${  i}`;
-    if (x > 20) return "color20";
-    if (x > 0) return "color1";
-    return "color0";
-  }
 };
