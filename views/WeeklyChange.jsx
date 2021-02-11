@@ -22,10 +22,15 @@ export default function WeeklyChange({ cases }) {
             return (100 * (curr - prev)) / prev;
           }}
           color={(x) => {
-            for (let i = 960; i >= 60; i /= 2) if (x > i) return `color${i}`;
-            if (x > 20) return "color20";
-            if (x > 0) return "color1";
-            return "color0";
+            if (x > 100) return "color100";
+            if (x > 50) return "color50";
+            if (x > 25) return "color25";
+            if (x > 10) return "color10";
+            if (x > 0) return "color0";
+            if (x > -10) return "color-10";
+            if (x > -25) return "color-25";
+            if (x > -50) return "color-50";
+            return "color-100";
           }}
         />
       </body>
