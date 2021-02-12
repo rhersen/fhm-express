@@ -11,6 +11,7 @@ import logger from "morgan";
 import deaths from "./src/deaths.js";
 import reactViews from "express-react-views";
 import cases from "./src/cases.js";
+import { cache } from "./src/cache.js";
 
 const app = express();
 
@@ -31,8 +32,6 @@ app.use(
     path.join(path.dirname(fileURLToPath(import.meta.url)), "public")
   )
 );
-
-const cache = {};
 
 async function getBook() {
   const { data, status, statusText } = await axios.get(
