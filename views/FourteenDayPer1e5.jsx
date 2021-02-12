@@ -2,7 +2,7 @@ import { Head } from "./Head.jsx";
 import React from "react";
 import { Table } from "./Table.jsx";
 
-export default function FourteenDayPer1e5({ cases }) {
+export default function FourteenDayPer1e5({ cases, population }) {
   const dates = Object.keys(cases.Totalt_antal_fall);
   const headers = Object.keys(cases);
 
@@ -16,6 +16,7 @@ export default function FourteenDayPer1e5({ cases }) {
           columns={headers.map((header) =>
             dates.map((date) => cases[header][date])
           )}
+          population={population}
           f={(a, pop) => (a.reduce((a, b) => a + b, 0) / pop) * 1e5}
           color={(x) => {
             for (let i = 960; i >= 60; i /= 2) if (x > i) return `color${i}`;

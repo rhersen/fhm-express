@@ -2,7 +2,7 @@ import { Head } from "./Head.jsx";
 import React from "react";
 import { Table } from "./Table.jsx";
 
-export default function WeeklyChange({ cases }) {
+export default function WeeklyChange({ cases, population }) {
   const dates = Object.keys(cases.Totalt_antal_fall);
   const headers = Object.keys(cases);
 
@@ -16,6 +16,7 @@ export default function WeeklyChange({ cases }) {
           columns={headers.map((header) =>
             dates.map((date) => cases[header][date])
           )}
+          population={population}
           f={(a) => {
             const prev = a.slice(0, 7).reduce((a, b) => a + b, 0);
             const curr = a.slice(-7).reduce((a, b) => a + b, 0);

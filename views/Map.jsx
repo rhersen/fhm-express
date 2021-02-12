@@ -18,32 +18,7 @@ function ValueText({ coordinates, value }) {
   );
 }
 
-export default function Map({ cases }) {
-  const population = {
-    Totalt_antal_fall: 10230000,
-    Blekinge: 159748,
-    Dalarna: 287795,
-    Gotland: 59636,
-    Gävleborg: 287333,
-    Halland: 333202,
-    Jämtland_Härjedalen: 130697,
-    Jönköping: 363351,
-    Kalmar: 245415,
-    Kronoberg: 201290,
-    Norrbotten: 250230,
-    Skåne: 1376659,
-    Stockholm: 2374550,
-    Sörmland: 297169,
-    Uppsala: 383044,
-    Värmland: 282342,
-    Västerbotten: 271621,
-    Västernorrland: 245380,
-    Västmanland: 275634,
-    Västra_Götaland: 1724529,
-    Örebro: 304634,
-    Östergötland: 465214,
-  };
-
+export default function Map({ cases, population }) {
   const sandhammaren = { y: 55.387522, x: 14.185065 };
   const fosby = { y: 59.2257424, x: 11.6937195 };
   const treriksröset = { y: 69.0507753, x: 20.5171448 };

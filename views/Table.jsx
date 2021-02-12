@@ -1,31 +1,7 @@
 import React from "react";
 
-const population = [
-  10230000,
-  159748,
-  287795,
-  59636,
-  287333,
-  333202,
-  130697,
-  363351,
-  245415,
-  201290,
-  250230,
-  1376659,
-  2374550,
-  297169,
-  383044,
-  282342,
-  271621,
-  245380,
-  275634,
-  1724529,
-  304634,
-  465214,
-];
-
-export const Table = ({ headers, dates, columns, f, color }) => {
+export const Table = ({ headers, dates, columns, population, f, color }) => {
+  const populationValues = Object.values(population);
   return (
     <div
       className="table"
@@ -49,7 +25,7 @@ export const Table = ({ headers, dates, columns, f, color }) => {
           {column
             .map((cell, rowIndex) => {
               const a = column.slice(rowIndex - 13, rowIndex + 1);
-              const x = f(a, population[colIndex]);
+              const x = f(a, populationValues[colIndex]);
               if (x === undefined) return <span> </span>;
               return (
                 <span key={rowIndex} className={color(x)}>
