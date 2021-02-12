@@ -1,7 +1,8 @@
 import React from "react";
 import { Head } from "./Head.jsx";
 
-export default function Chart({ cases }) {
+export default function Chart({ cases, population }) {
+  const populationValues = Object.values(population);
   const region = 0;
   const dates = Object.keys(cases.Totalt_antal_fall);
   const headers = Object.keys(cases);
@@ -42,7 +43,7 @@ export default function Chart({ cases }) {
                 .map((cell, rowIndex) => {
                   const a = columns[region].slice(rowIndex - 13, rowIndex + 1);
 
-                  const x = sevenDayPerMillion(a, 10230000) || 0;
+                  const x = sevenDayPerMillion(a, populationValues[region]) || 0;
                   return `${(rowIndex * 800) / columns[region].length},${
                     600 - x * yScale
                   }`;
