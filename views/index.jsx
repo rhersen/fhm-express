@@ -1,11 +1,10 @@
 import React from "react";
+import { Head } from "./Head.jsx";
 
 // eslint-disable-next-line react/display-name
 export default () => (
   <html>
-    <head>
-      <link rel="stylesheet" href="/stylesheets/style.css" />
-    </head>
+    <Head title="fhm-express" />
     <body>
       <nav>
         <ul>
