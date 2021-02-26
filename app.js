@@ -47,7 +47,7 @@ async function getBook() {
   );
   const fileReleased = addHours(parse(date, "d MMM yyyy", new Date()), 14);
   cache.book = book;
-  cache.expires = addMinutes(fileReleased, 1430);
+  cache.expires = addMinutes(fileReleased, 1370);
   return book;
 }
 
