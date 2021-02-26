@@ -135,6 +135,20 @@ app.use("/chart", async (req, res, next) => {
   }
 });
 
+app.use("/antal-per-dag-region", async (req, res, next) => {
+  const book = await getBook();
+  res.setHeader("Content-Type", "application/json");
+  res.charset = "utf8";
+  res.end(JSON.stringify(book.Sheets["Antal per dag region"]));
+});
+
+app.use("/antal-avlidna-per-dag", async (req, res, next) => {
+  const book = await getBook();
+  res.setHeader("Content-Type", "application/json");
+  res.charset = "utf8";
+  res.end(JSON.stringify(book.Sheets["Antal avlidna per dag"]));
+});
+
 app.use("/", (req, res, next) => {
   res.render("index");
 });
