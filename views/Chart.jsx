@@ -22,6 +22,35 @@ export default function Chart({ cases, population }) {
       <Head title="chart of 7-day average" />
       <body>
         <div className="chart">
+          <svg viewBox="0 0 800 600">
+            {yValues.map((y) => (
+              <line key={y} x1="0" y1={y * yScale} x2="800" y2={y * yScale} />
+            ))}
+
+            {columns.map((column, key) => (
+              <>
+                <text x="0" y={(key + 2) * 24}>
+                  {headers[key]}
+                </text>
+                <polyline
+                  key={key}
+                  fill="none"
+                  stroke="#ccc"
+                  points={(column || [])
+                    .map((cell, rowIndex) => {
+                      const a = column.slice(rowIndex - 13, rowIndex + 1);
+
+                      const x =
+                        sevenDayPerMillion(a, populationValues[key]) || 0;
+                      return `${(rowIndex * 800) / column.length},${
+                        600 - x * yScale
+                      }`;
+                    })
+                    .join(" ")}
+                />
+              </>
+            ))}
+          </svg>
           <div className="y-values">
             {yValues.map((y) => (
               <div key={y} className="y-value">
@@ -29,40 +58,7 @@ export default function Chart({ cases, population }) {
               </div>
             ))}
           </div>
-          <svg viewBox="0 0 800 600">
-            {yValues.map((y) => (
-              <line key={y} x1="0" y1={y * yScale} x2="800" y2={y * yScale} />
-            ))}
-
-            {columns.map((column, key) => (
-              <polyline
-                key={key}
-                fill="none"
-                stroke="#ccc"
-                points={(column || [])
-                  .map((cell, rowIndex) => {
-                    const a = column.slice(rowIndex - 13, rowIndex + 1);
-
-                    const x = sevenDayPerMillion(a, populationValues[key]) || 0;
-                    return `${(rowIndex * 800) / column.length},${
-                      600 - x * yScale
-                    }`;
-                  })
-                  .join(" ")}
-              />
-            ))}
-          </svg>
-          <div className="regions">
-            {headers.map((y) => (
-              <div key={y} className="yvalue">
-                {y}
-              </div>
-            ))}
-          </div>
         </div>
-        <script>
-          let d = new Date(); console.log(d);
-        </script>
       </body>
     </html>
   );
