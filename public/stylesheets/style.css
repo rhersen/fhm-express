@@ -44,6 +44,14 @@ li {
   border: black 2px solid;
 }
 
+.chart .regions {
+  grid-column: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 12px;
+}
+
 .chart svg polyline {
   stroke-width: 1.5;
 }

@@ -3,7 +3,6 @@ import { Head } from "./Head.jsx";
 
 export default function Chart({ cases, population }) {
   const populationValues = Object.values(population);
-  const region = 0;
   const dates = Object.keys(cases.Totalt_antal_fall);
   const headers = Object.keys(cases);
   const columns = headers.map((header) =>
@@ -22,7 +21,6 @@ export default function Chart({ cases, population }) {
     <html>
       <Head title="chart of 7-day average" />
       <body>
-        <div>{headers[region]}</div>
         <div className="chart">
           <div className="y-values">
             {yValues.map((y) => (
@@ -36,22 +34,35 @@ export default function Chart({ cases, population }) {
               <line key={y} x1="0" y1={y * yScale} x2="800" y2={y * yScale} />
             ))}
 
-            <polyline
-              fill="none"
-              stroke="#c3227d"
-              points={(columns[region] || [])
-                .map((cell, rowIndex) => {
-                  const a = columns[region].slice(rowIndex - 13, rowIndex + 1);
+            {columns.map((column, key) => (
+              <polyline
+                key={key}
+                fill="none"
+                stroke="#ccc"
+                points={(column || [])
+                  .map((cell, rowIndex) => {
+                    const a = column.slice(rowIndex - 13, rowIndex + 1);
 
-                  const x = sevenDayPerMillion(a, populationValues[region]) || 0;
-                  return `${(rowIndex * 800) / columns[region].length},${
-                    600 - x * yScale
-                  }`;
-                })
-                .join(" ")}
-            />
+                    const x = sevenDayPerMillion(a, populationValues[key]) || 0;
+                    return `${(rowIndex * 800) / column.length},${
+                      600 - x * yScale
+                    }`;
+                  })
+                  .join(" ")}
+              />
+            ))}
           </svg>
+          <div className="regions">
+            {headers.map((y) => (
+              <div key={y} className="yvalue">
+                {y}
+              </div>
+            ))}
+          </div>
         </div>
+        <script>
+          let d = new Date(); console.log(d);
+        </script>
       </body>
     </html>
   );
